@@ -1,15 +1,20 @@
-# This is the application that I have created with AI as an example.
 
-from flask import Flask, request, render_template, redirect, url_for
-import os
-# ^ These imports are for flask and os modules.
+#Used this video to help write this code:  https://www.youtube.com/watch?v=jQjjqEjZK58
 
-app = Flask(__name__) # This is an object of type Flask.
-tasks = [] # This is a list
+from flask import Flask, render_template, request, redirect, url_for
+from waitress import serve
 
-@app.route('/') # This is the route for the home page.
-def TODO():
-    return render_template('TODO.html', tasks=tasks)
-# ^ This is the function that renders the TODO.html template and passes the tasks list to it.
+app = Flask(__name__)
 
-@app.route('/add', methods=['POST']) # This is the route for adding a task.
+@app.route('/')
+@app.route('/index')
+def index():
+    return render_template('index.html')
+
+@app.route('/TODO')
+def todo():
+    return render_template('TODO.html')
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=8080, debug=True)
+    # serve (app, host="0.0.0.0", port=8000) // Doesn't work yet (Don't know why waitress isn't detected)
